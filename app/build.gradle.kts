@@ -73,7 +73,7 @@ dependencies {
 
     // Retrofit
     implementation(libs.converter.gson)
-    implementation(libs.retrofit)
+    implementation(libs.retrofit2.retrofit)
 
     // Coil
     implementation(libs.coil.compose)
