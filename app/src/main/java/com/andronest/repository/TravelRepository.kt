@@ -1,7 +1,7 @@
 package com.andronest.repository
 
 import android.util.Log
-import com.andronest.model.StopLocation
+import com.andronest.model.StopLocationOrCoordLocation
 import com.andronest.retrofit.RetrofitApi
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -12,22 +12,17 @@ class TravelRepository @Inject constructor(
     val retrofitApi: RetrofitApi){
 
 
-    suspend fun getNearbyStops(): List<StopLocation>{
+    suspend fun getNearbyStops(): List<StopLocationOrCoordLocation> {
 
         try {
-            var result = retrofitApi.getNearbyStops("18.083056","59.293611").stopLocations
+            val result = retrofitApi.getNearbyStops("57.708895","11.973479").stopLocationOrCoordLocation
 
-            if(result.isNullOrEmpty()) {
-                 result = emptyList()
-            } else {
-                return result
-            }
+            return result
+
 
         }catch (e: Exception){
             Log.d("MyTag", "error: " + e.message)
+            return emptyList()
         }
-
-        return emptyList()
     }
-
 }

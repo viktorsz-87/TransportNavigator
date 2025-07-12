@@ -72,8 +72,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     // Retrofit
-    implementation(libs.converter.gson)
-    implementation(libs.retrofit2.retrofit)
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // Coil
     implementation(libs.coil.compose)
@@ -85,6 +85,6 @@ dependencies {
     implementation(libs.androidx.room.ktx)
 
     // Reflection
-    implementation(libs.kotlin.reflect)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
 
 }
