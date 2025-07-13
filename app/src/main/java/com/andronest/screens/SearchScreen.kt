@@ -42,7 +42,7 @@ import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.andronest.R
-import com.andronest.model.StopLocationOrCoordLocation
+import com.andronest.model.StopLocationWrapper
 import com.andronest.navigation.BottomNavigationBar
 import com.andronest.viewmodels.SearchViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -68,7 +68,6 @@ fun SearchScreen(
         }
     }
 
-    GetLocation()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -88,6 +87,7 @@ fun SearchScreen(
 
     ) { paddingValues ->
 
+        GetLocation(viewModel)
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -118,7 +118,9 @@ fun SearchScreen(
 }
 
 @Composable
-fun GetLocation(modifier: Modifier = Modifier) {
+fun GetLocation(
+    viewModel: SearchViewModel,
+    modifier: Modifier = Modifier) {
     val context = LocalContext.current
     var locationText by remember { mutableStateOf("Getting location...") }
 
@@ -137,6 +139,7 @@ fun GetLocation(modifier: Modifier = Modifier) {
     ) { granted ->
         if (granted) fetchLocation(context,locationClient, locationRequest) { lat, lon ->
             locationText = "Location: $lat, $lon"
+            viewModel.getNearbyStops(lat = lat.toString(), long = lon.toString())
         }
     }
 
@@ -148,6 +151,7 @@ fun GetLocation(modifier: Modifier = Modifier) {
         ) {
             fetchLocation(context,locationClient, locationRequest) { lat, lon ->
                 locationText = "Location: $lat, $lon"
+                viewModel.getNearbyStops(lat = lat.toString(), long = lon.toString())
             }
         } else {
             permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -155,6 +159,7 @@ fun GetLocation(modifier: Modifier = Modifier) {
     }
 
     Text(locationText)
+
 }
 
 
@@ -215,17 +220,21 @@ fun SearchingState(modifier: Modifier = Modifier) {
 
 @Composable
 fun SearchResults(
-    results: List<StopLocationOrCoordLocation>,
+    results: List<StopLocationWrapper>,
     modifier: Modifier = Modifier
 ) {
-
     LazyColumn(modifier = modifier
         .fillMaxSize()
         .padding(16.dp)) {
 
         items(items = results) { stopLocation ->
 
-            Text(text = "location: ${stopLocation.stopLocation.name}")
+            Text(text = "location: ${stopLocation.stopLocation?.name}")
+
+            val prods = stopLocation.stopLocation?.productAtStop?.forEach {
+                Text(text = "type: ${it.getProductType()}")
+            }
+
         }
     }
 }

@@ -26,16 +26,16 @@ class SearchViewModel @Inject constructor(
     val searchUiState = _searchUiState.asStateFlow()
 
     init {
-        getNearbyStops()
+
     }
 
-     fun getNearbyStops() {
+     fun getNearbyStops(lat: String, long: String) {
         viewModelScope.launch {
 
             _searchUiState.update { it.copy(isSearching = true, errorMessage = null) }
 
             try {
-                val result = repository.getNearbyStops()
+                val result = repository.getNearbyStops(lat = lat, long=long)
 
                 _searchUiState.update {
                    it.copy(

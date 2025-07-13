@@ -1,7 +1,7 @@
 package com.andronest.di
 
 import com.andronest.repository.TravelRepository
-import com.andronest.retrofit.RetrofitApi
+import com.andronest.retrofit.ResRobotAPI
 import com.andronest.retrofit.RetrofitInstance
 import dagger.Module
 import dagger.Provides
@@ -16,14 +16,14 @@ object AppModule{
 
     @Singleton
     @Provides
-    fun provideRetrofitInstance(): RetrofitApi {
-        return RetrofitInstance.retrofitApi
+    fun provideRetrofitInstance(): ResRobotAPI {
+        return RetrofitInstance.resRobotAPI
     }
 
     @Singleton
     @Provides
-    fun provideTravelRepository(retrofitApi: RetrofitApi): TravelRepository {
-        return TravelRepository(retrofitApi)
+    fun provideTravelRepository(resRobotAPI: ResRobotAPI): TravelRepository {
+        return TravelRepository(resRobotAPI)
     }
 
 }
