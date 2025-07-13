@@ -6,12 +6,16 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresPermission
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.andronest.navigation.Navigation
-import com.andronest.screens.SearchScreen
+import com.andronest.screens.arrivals.ArrivalsScreen
+import com.andronest.screens.search.SearchScreen
 import com.andronest.ui.theme.TransportNavigatorTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,11 +30,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             TransportNavigatorTheme {
                 val navController = rememberNavController()
-                val currentRoute = navController.currentBackStackEntry?.let {
+                val backStackState by navController.currentBackStackEntryAsState()
+                val currentRoute = backStackState?.destination?.route
+
+                /*val currentRoute = navController.currentBackStackEntry?.let {
                     derivedStateOf {
                         it.destination.route
                     }
-                }?.value
+                }?.value*/
 
                 NavHost(
                     navController = navController,
@@ -38,7 +45,24 @@ class MainActivity : ComponentActivity() {
                 ) {
 
                     composable(route = Navigation.SearchScreen.route) {
-                        SearchScreen(currentRoute)
+                        SearchScreen(
+                            currentDest = currentRoute,
+                            navController = navController)
+                    }
+                    composable(
+                        arguments = listOf(
+                            navArgument(name = "id"){
+                                type= NavType.StringType
+                                nullable=true
+                            }
+                        ),
+                        route = Navigation.ArrivalsScreen.route) {
+
+                        val id = it.arguments?.getString("id")
+                        id?.let {
+                            ArrivalsScreen(currentDest = currentRoute, id=id)
+                        }
+
                     }
                 }
             }

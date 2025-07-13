@@ -52,7 +52,7 @@ data class ProductAtStop(
     @SerializedName("icon") val icon: Icon? = null,
 ){
     fun getProductType(): String {
-        return Constants.TrafikLab.productTypes[cls] ?: "Unknown"
+        return Constants.ResRobot.productTypes[cls] ?: "Unknown"
     }
 }
 

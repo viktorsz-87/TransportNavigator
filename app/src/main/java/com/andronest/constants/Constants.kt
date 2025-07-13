@@ -10,7 +10,7 @@ object Constants{
         const val BASE_URL_NEARBY_STOPS = "https://api.resrobot.se/"
     }
 
-    object TrafikLab{
+    object ResRobot{
 
         val productTypes = mapOf<String,String>(
             "128" to "Bus",
