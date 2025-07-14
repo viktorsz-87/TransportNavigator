@@ -13,7 +13,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -21,6 +20,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.andronest.navigation.BottomNavigationBar
+import com.andronest.screens.shared.ErrorState
+import com.andronest.screens.shared.SearchingState
 import com.andronest.viewmodels.SearchViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,24 +67,11 @@ fun SearchScreen(
                 .padding(paddingValues)
         ) {
 
-            // Remember(uiState): Only when reference changes..
-            remember(uiState) {
-                derivedStateOf {
-                    // check the state values..
-                    !uiState.isSearching &&
-                    uiState.errorMessage == null &&
-                    !uiState.results.isNullOrEmpty()
-                }
-            }.value.let { showResults->
-
-                when(showResults){
-                    true -> SearchResults(results = uiState.results, navController=navController)
-                    else->  when {
-                        uiState.isSearching -> SearchingState()
-                        uiState.errorMessage != null -> ErrorState(uiState.errorMessage)
-                        else -> EmptyState()
-                    }
-                }
+            when {
+                uiState.isSearching -> SearchingState()
+                uiState.errorMessage!=null -> ErrorState(errorMessage = uiState.errorMessage)
+                !uiState.results.isNullOrEmpty() -> SearchResults(navController, uiState.results)
+                else -> EmptyState()
             }
         }
     }

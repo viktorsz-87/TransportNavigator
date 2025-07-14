@@ -1,4 +1,4 @@
-package com.andronest.screens.search
+package com.andronest.screens.arrivals
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -8,27 +8,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.andronest.model.NearbyStopsResponse
-import com.andronest.navigation.Navigation
+import com.andronest.model.ArrivalsResponse
 
 @Composable
-fun SearchResults(
+fun ArrivalsResult(
     navController: NavController,
-    results: List<NearbyStopsResponse.StopLocationOrCoordLocation>,
+    results: List<ArrivalsResponse.Arrival>,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier
         .fillMaxSize()
         .padding(16.dp)) {
 
-        items(items = results) { stopLocation ->
+        items(items = results) { item ->
 
-            stopLocation.stopLocation?.let { stopLoc->
-                //Card
-                SearchCard(
-                    stopLocation = stopLoc,
-                    onClick = {navController.navigate(Navigation.ArrivalsScreen.createRoute(stopLoc.id))})
-            }
+          ArrivalsCard(item=item)
+
         }
     }
 }

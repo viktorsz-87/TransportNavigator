@@ -33,12 +33,6 @@ class MainActivity : ComponentActivity() {
                 val backStackState by navController.currentBackStackEntryAsState()
                 val currentRoute = backStackState?.destination?.route
 
-                /*val currentRoute = navController.currentBackStackEntry?.let {
-                    derivedStateOf {
-                        it.destination.route
-                    }
-                }?.value*/
-
                 NavHost(
                     navController = navController,
                     startDestination = Navigation.SearchScreen.route
@@ -60,9 +54,11 @@ class MainActivity : ComponentActivity() {
 
                         val id = it.arguments?.getString("id")
                         id?.let {
-                            ArrivalsScreen(currentDest = currentRoute, id=id)
+                            ArrivalsScreen(
+                                id=id,
+                                currentDest = currentRoute,
+                                navController = navController)
                         }
-
                     }
                 }
             }

@@ -26,7 +26,7 @@ fun BottomNavigationBar(
     modifier: Modifier = Modifier
 ) {
 
-    val navBarItems = listOf<BottomNavBarItem>(
+    val navBarItems = listOf(
         BottomNavBarItem(
             icon = Icons.Default.Search,
             title = "Search",

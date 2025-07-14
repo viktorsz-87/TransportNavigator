@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    val repository: TravelRepository
+    private val repository: TravelRepository
 ) : ViewModel() {
 
     private val _errorChannel = Channel<String>()

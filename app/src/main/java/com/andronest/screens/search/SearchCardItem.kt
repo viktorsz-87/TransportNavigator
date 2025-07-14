@@ -16,12 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.andronest.model.StopLocation
+import com.andronest.model.NearbyStopsResponse
 import com.andronest.ui.theme.SearchTextColor
 
 @Composable
 fun SearhCardItem(
-    stopLocation: StopLocation,
+    stopLocation: NearbyStopsResponse.StopLocationOrCoordLocation.StopLocation,
     modifier: Modifier = Modifier) {
 
     stopLocation.productAtStop?.forEach { type->
@@ -32,18 +32,17 @@ fun SearhCardItem(
             Column(
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Center,
-                modifier=modifier.weight(0.15f).fillMaxSize()){
+                modifier=modifier.weight(0.12f).fillMaxSize()){
 
-                //TODO Change icons to correct ones
                 when{
                     type.getProductType()=="Bus"-> {
                         Icon(
-                            modifier=modifier.size(40.dp),
+                            modifier=modifier.size(35.dp),
                             imageVector = Icons.Default.Favorite, contentDescription = "Stop Type")
                     }
                     type.getProductType()=="Metro"-> {
                         Icon(
-                            modifier=modifier.size(40.dp),
+                            modifier=modifier.size(35.dp),
                             imageVector = Icons.Default.Home, contentDescription = "Stop Type")
                     }
                 }
@@ -58,7 +57,7 @@ fun SearhCardItem(
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
-                    text = "${stopLocation.name}, ${stopLocation.distance}m")
+                    text = "${stopLocation.name}, ${stopLocation.dist}m")
             }
         }
     }

@@ -2,6 +2,7 @@ package com.andronest.retrofit
 
 
 import com.andronest.constants.Constants.API_KEYS.RESROBOT_API_KEY
+import com.andronest.model.ArrivalsResponse
 import com.andronest.model.NearbyStopsResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -39,7 +40,7 @@ interface ResRobotAPI {
         @Query("format") format: String = "json",
         @Query("maxJourneys") maxResults: Int = 5,
         @Query("accessId") apiKey: String = RESROBOT_API_KEY
-    ): Response<NearbyStopsResponse> // Use Retrofit's Response wrapper
+    ): Response<ArrivalsResponse> // Use Retrofit's Response wrapper
 
 }
 

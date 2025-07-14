@@ -20,5 +20,13 @@ object Constants{
             "64" to "Tram",
             "16" to "Local train",
         )
+
+        val arrivalProductCats = mapOf<String,String>(
+            "BLT" to "Local bus",
+            "JLT" to "Local train",
+            "JBL" to "Train",
+            "ULT" to "Metro",
+
+        )
     }
 }
