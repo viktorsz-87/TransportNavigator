@@ -5,17 +5,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.andronest.R
 import com.andronest.model.NearbyStopsResponse
 import com.andronest.ui.theme.SearchTextColor
 
@@ -38,12 +37,12 @@ fun SearhCardItem(
                     type.getProductType()=="Bus"-> {
                         Icon(
                             modifier=modifier.size(35.dp),
-                            imageVector = Icons.Default.Favorite, contentDescription = "Stop Type")
+                            painter = painterResource(R.drawable.bus_24), contentDescription = "Stop Type")
                     }
                     type.getProductType()=="Metro"-> {
                         Icon(
                             modifier=modifier.size(35.dp),
-                            imageVector = Icons.Default.Home, contentDescription = "Stop Type")
+                            painter = painterResource(R.drawable.subway_24), contentDescription = "Stop Type")
                     }
                 }
             }

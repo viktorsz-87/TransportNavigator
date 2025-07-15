@@ -16,6 +16,7 @@ import androidx.navigation.navArgument
 import com.andronest.navigation.Navigation
 import com.andronest.screens.arrivals.ArrivalsScreen
 import com.andronest.screens.search.SearchScreen
+import com.andronest.screens.trip.TripScreen
 import com.andronest.ui.theme.TransportNavigatorTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,26 +39,54 @@ class MainActivity : ComponentActivity() {
                     startDestination = Navigation.SearchScreen.route
                 ) {
 
+                    composable(
+                        arguments = listOf(
+                            navArgument("latitude"){
+                                type = NavType.FloatType
+                                nullable = false
+                            },
+                            navArgument("longitude"){
+                                type = NavType.FloatType
+                                nullable = false
+                            },
+                            navArgument("stopId"){
+                                type = NavType.StringType
+                                nullable = true
+                            }
+                        ),
+                        route = Navigation.TripScreen.route) {
+
+                        val stopId = it.arguments?.getString("stopId")
+
+                        TripScreen(
+                            stopId = stopId ?: "-1",
+                            currentDest = currentRoute,
+                            navController = navController
+                        )
+                    }
                     composable(route = Navigation.SearchScreen.route) {
                         SearchScreen(
                             currentDest = currentRoute,
-                            navController = navController)
+                            navController = navController
+                        )
                     }
                     composable(
                         arguments = listOf(
-                            navArgument(name = "id"){
-                                type= NavType.StringType
-                                nullable=true
-                            }
+                            navArgument(name = "id") {
+                                type = NavType.StringType
+                                nullable = true
+                            },
                         ),
                         route = Navigation.ArrivalsScreen.route) {
 
                         val id = it.arguments?.getString("id")
+
                         id?.let {
                             ArrivalsScreen(
-                                id=id,
+                                id = id,
                                 currentDest = currentRoute,
-                                navController = navController)
+                                navController = navController
+                            )
                         }
                     }
                 }

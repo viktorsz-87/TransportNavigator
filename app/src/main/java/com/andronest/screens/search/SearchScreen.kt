@@ -59,7 +59,7 @@ fun SearchScreen(
 
     ) { paddingValues ->
 
-        GetLocation(viewModel)
+        GetLocation(viewModel = viewModel)
 
         Column(
             modifier = Modifier

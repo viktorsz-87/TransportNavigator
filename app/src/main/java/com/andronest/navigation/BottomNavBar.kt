@@ -29,21 +29,21 @@ fun BottomNavigationBar(
     val navBarItems = listOf(
         BottomNavBarItem(
             icon = Icons.Default.Search,
-            title = "Search",
+            title = "Nearby Stops",
             route = Navigation.SearchScreen.getBaseRoute(),
-            description = "Search nearby stops"
+            description = "Search stops.."
         ),
         BottomNavBarItem(
             icon = Icons.Default.Info,
-            title = "Arrivals",
+            title = "Search Arrivals",
             route = Navigation.ArrivalsScreen.getBaseRoute(),
             description = "Arrivals.."
         ),
         BottomNavBarItem(
             icon = Icons.Default.LocationOn,
-            title = "Map Routes",
-            route = Navigation.MapRoutesScreen.getBaseRoute(),
-            description = "Routes.."
+            title = "Search Trip",
+            route = Navigation.TripScreen.getBaseRoute(),
+            description = "Trip.."
         ),
         BottomNavBarItem(
             icon = Icons.Default.Favorite,

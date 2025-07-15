@@ -17,17 +17,18 @@ fun SearchResults(
     results: List<NearbyStopsResponse.StopLocationOrCoordLocation>,
     modifier: Modifier = Modifier
 ) {
-    LazyColumn(modifier = modifier
-        .fillMaxSize()
-        .padding(16.dp)) {
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
 
         items(items = results) { stopLocation ->
 
-            stopLocation.stopLocation?.let { stopLoc->
-                //Card
+            stopLocation.stopLocation?.let { stopLoc ->
                 SearchCard(
                     stopLocation = stopLoc,
-                    onClick = {navController.navigate(Navigation.ArrivalsScreen.createRoute(stopLoc.id))})
+                    onClick = { navController.navigate(Navigation.ArrivalsScreen.createRoute(stopLoc.id)) })
             }
         }
     }

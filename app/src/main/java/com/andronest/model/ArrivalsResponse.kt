@@ -107,7 +107,7 @@ data class ArrivalsResponse(
             @SerializedName("num")
             val num: String = "",
             @SerializedName("operator")
-            val `operator`: String = "",
+            val operator: String = "",
             @SerializedName("operatorCode")
             val operatorCode: String = "",
             @SerializedName("operatorInfo")

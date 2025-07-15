@@ -8,6 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitInstance {
 
     val resRobotAPI: ResRobotAPI by lazy {
+
         Retrofit.Builder()
             .baseUrl(BASE_URL_NEARBY_STOPS)
             .addConverterFactory(GsonConverterFactory.create())

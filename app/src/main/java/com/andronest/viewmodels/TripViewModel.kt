@@ -2,7 +2,7 @@ package com.andronest.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.andronest.model.ArrivalsScreenState
+import com.andronest.model.TripScreenState
 import com.andronest.repository.TravelRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -14,41 +14,40 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ArrivalsViewModel @Inject constructor(
+class TripViewModel @Inject constructor(
     private val repository: TravelRepository
 ) : ViewModel() {
 
     private val _errorChannel: Channel<String> = Channel<String>()
     val errorChannel = _errorChannel.receiveAsFlow()
 
-    private val _arrivalsUiState = MutableStateFlow(ArrivalsScreenState())
-    val arrivalsUiState = _arrivalsUiState.asStateFlow()
+    private val _tripUiState = MutableStateFlow(TripScreenState())
+    val tripUiState = _tripUiState.asStateFlow()
 
-
-    fun getArrivals(id: String) {
+    fun getTrip(originStopId: String, destStopId: String)
+    {
         viewModelScope.launch {
-
-            _arrivalsUiState.update {
-                it.copy(isSearching = true, errorMessage = null, results = emptyList())
-            }
+            _tripUiState.update { it.copy(isSearching = true) }
 
             try {
-                val result = repository.getArrivals(id = id)
-                _arrivalsUiState.update {
-                    it.copy(
-                        isSearching = false,
-                        errorMessage = if(result.isNullOrEmpty()) "Error getting arrivals" else null,
-                        results = result)
-                }
+                val result = repository.getTripRoute(originStopId = originStopId, destStopId = destStopId)
 
-            } catch (e: Exception){
-                _arrivalsUiState.update {
+                _tripUiState.update {
                     it.copy(
                         isSearching = false,
-                        errorMessage = e.message ?: "Unknown error",
-                        results = emptyList())
+                        results = result,
+                        errorMessage = if (result.isNullOrEmpty()) "Error getting trip info" else null
+                    )
                 }
-                _errorChannel.send(e.message?: "Unknown error")
+            } catch (e: Exception) {
+                _tripUiState.update {
+                    it.copy(
+                        results = emptyList(),
+                        errorMessage = e.message ?: "Unknown error",
+                        isSearching = false
+                    )
+                }
+                _errorChannel.send(e.message ?: "Unknown error")
             }
         }
     }

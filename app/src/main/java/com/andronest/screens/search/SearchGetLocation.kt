@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.andronest.di.TransportNavigatorApp
 import com.andronest.viewmodels.SearchViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -48,6 +49,11 @@ fun GetLocation(
         if (granted) fetchLocation(context,locationClient, locationRequest) { lat, lon ->
             locationText = "Location: $lat, $lon"
             viewModel.getNearbyStops(lat = lat.toString(), long = lon.toString())
+
+
+            TransportNavigatorApp.userLatitude = lat
+            TransportNavigatorApp.userLongitude = lon
+            viewModel.getUserStopId(lat.toString(), lon.toString())
         }
     }
 
@@ -60,6 +66,11 @@ fun GetLocation(
             fetchLocation(context,locationClient, locationRequest) { lat, lon ->
                 locationText = "Location: $lat, $lon"
                 viewModel.getNearbyStops(lat = lat.toString(), long = lon.toString())
+
+                //TODO förbättra senare
+                TransportNavigatorApp.userLatitude = lat
+                TransportNavigatorApp.userLongitude = lon
+                viewModel.getUserStopId(lat.toString(), lon.toString())
             }
         } else {
             permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)

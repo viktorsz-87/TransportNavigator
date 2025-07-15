@@ -2,6 +2,7 @@ package com.andronest.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.andronest.di.TransportNavigatorApp
 import com.andronest.model.SearchScreenState
 import com.andronest.repository.TravelRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,8 +26,11 @@ class SearchViewModel @Inject constructor(
     private val _searchUiState = MutableStateFlow<SearchScreenState>(SearchScreenState())
     val searchUiState = _searchUiState.asStateFlow()
 
-    init {
 
+    fun getUserStopId(lat: String, long: String) {
+        viewModelScope.launch{
+            TransportNavigatorApp.userStopId = repository.getStopId(lat, long)
+        }
     }
 
      fun getNearbyStops(lat: String, long: String) {

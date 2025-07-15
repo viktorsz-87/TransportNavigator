@@ -1,4 +1,4 @@
-package com.andronest.screens.arrivals
+package com.andronest.screens.trip
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,32 +19,38 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.andronest.di.TransportNavigatorApp
 import com.andronest.navigation.BottomNavigationBar
 import com.andronest.screens.search.EmptyState
 import com.andronest.screens.shared.ErrorState
 import com.andronest.screens.shared.SearchingState
-import com.andronest.viewmodels.ArrivalsViewModel
+import com.andronest.viewmodels.TripViewModel
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ArrivalsScreen(
+fun TripScreen(
+    stopId: String,
     currentDest: String?,
-    id: String,
     navController: NavController,
-    viewModel: ArrivalsViewModel = hiltViewModel(),
+    viewModel: TripViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
 
     val snackbarHostState = remember { SnackbarHostState() }
-    val uiState by viewModel.arrivalsUiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.tripUiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        viewModel.errorChannel.collect { errorMsg ->
-            snackbarHostState.showSnackbar(errorMsg)
+        viewModel.errorChannel.collect { errorMessage ->
+            snackbarHostState.showSnackbar(message = errorMessage)
         }
     }
-    LaunchedEffect(key1 = id) {
-        viewModel.getArrivals(id = id)
+
+    LaunchedEffect(Unit) {
+        viewModel.getTrip(
+            destStopId = stopId,
+            originStopId = TransportNavigatorApp.userStopId
+        )
     }
 
     Scaffold(
@@ -56,7 +62,7 @@ fun ArrivalsScreen(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary
                 ),
-                title = { Text("Arrivals") }
+                title = { Text("Trips") }
             )
         },
         bottomBar = {
@@ -72,13 +78,14 @@ fun ArrivalsScreen(
         ) {
 
             when {
-                uiState.errorMessage != null -> ErrorState(errorMessage = uiState.errorMessage)
+                uiState.errorMessage != null -> ErrorState(uiState.errorMessage)
                 uiState.isSearching -> SearchingState()
                 !uiState.results.isNullOrEmpty() ->
-                    ArrivalsResult(
-                    viewModel = viewModel,
-                    navController=navController,
-                    results = uiState.results)
+                    TripResults(
+                        navController = navController,
+                        results = uiState.results
+                    )
+
                 else -> EmptyState()
             }
         }
