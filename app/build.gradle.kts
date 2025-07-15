@@ -94,4 +94,10 @@ dependencies {
     // Reflection
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
 
+    // Google Maps SDK
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.maps.android:maps-compose:2.11.4")
+    implementation("com.google.maps.android:maps-compose-utils:2.11.4")
+    implementation("com.google.maps.android:maps-compose-widgets:2.11.4")
+
 }

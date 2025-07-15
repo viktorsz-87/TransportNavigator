@@ -38,7 +38,8 @@ fun TripResults(
         Arrival:  ${formatTime(trip.destination.time)}
        
         """.trimIndent()
-            Text(text = summary)
+
+        Text(text = summary)
 
         trip.legList.leg.forEach { leg ->
 
