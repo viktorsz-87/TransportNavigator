@@ -53,7 +53,7 @@ fun GetLocation(
 
             TransportNavigatorApp.userLatitude = lat
             TransportNavigatorApp.userLongitude = lon
-            viewModel.getUserStopId(lat.toString(), lon.toString())
+            viewModel.getUserStopId()
         }
     }
 
@@ -70,7 +70,7 @@ fun GetLocation(
                 //TODO förbättra senare
                 TransportNavigatorApp.userLatitude = lat
                 TransportNavigatorApp.userLongitude = lon
-                viewModel.getUserStopId(lat.toString(), lon.toString())
+                viewModel.getUserStopId()
             }
         } else {
             permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)

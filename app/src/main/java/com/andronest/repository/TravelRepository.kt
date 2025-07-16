@@ -14,20 +14,24 @@ import javax.inject.Singleton
 class TravelRepository @Inject constructor(
     val resRobotAPI: ResRobotAPI
 ) {
-    suspend fun getStopId(lat: String, long: String): String{
-        try {
+    suspend fun getUserStopId(): String {
+        return try {
             val stopId = resRobotAPI.getNearbyStops(
                 TransportNavigatorApp.userLatitude.toString(),
                 TransportNavigatorApp.userLongitude.toString()
-            ).body()?.stopLocationOrCoordLocation?.firstNotNullOfOrNull { it.stopLocation.id }
+            ).body()?.stopLocationOrCoordLocation?.firstNotNullOfOrNull { it.stopLocation.extId }
 
-            return stopId?: ""
-        } catch (e: Exception){
-            return "Error getting Stop Id"
+            return stopId ?: ""
+        } catch (e: Exception) {
+            Log.e("StopId", "Error fetching stop ID", e)
+            ""  // Return empty string on error
         }
     }
 
-    suspend fun getNearbyStops(lat: String, long: String): List<NearbyStopsResponse.StopLocationOrCoordLocation> {
+    suspend fun getNearbyStops(
+        lat: String,
+        long: String
+    ): List<NearbyStopsResponse.StopLocationOrCoordLocation> {
 
         try {
             val result = resRobotAPI.getNearbyStops(latitude = lat, longitude = long)
@@ -45,31 +49,44 @@ class TravelRepository @Inject constructor(
     suspend fun getArrivals(id: String): List<ArrivalsResponse.Arrival> {
 
         try {
-           val result = resRobotAPI.getArrivals(id = id)
+            val result = resRobotAPI.getArrivals(id = id)
 
-            return when{
-                result.isSuccessful->result.body()?.arrival.orEmpty()
+            return when {
+                result.isSuccessful -> result.body()?.arrival.orEmpty()
                 else -> emptyList()
             }
 
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.d("TravelRepository", "error: " + e.message)
             return emptyList()
         }
     }
 
-    suspend fun getTripRoute(originStopId: String, destStopId: String):  List<TripResponse.Trip> {
+    suspend fun getTripRoute(originStopId: String, destStopId: String): List<TripResponse.Trip> {
         try {
             val result = resRobotAPI.getTripRoute(originId = originStopId, destId = destStopId)
 
-            return when{
-                result.isSuccessful->result.body()?.trip.orEmpty()
-                else-> emptyList()
+            // TESTAR
+            // Debug raw response
+            //println("HTTP Status: ${result.code()}")
+           // println("Headers: ${result.headers()}")
+            //println("Raw Body: ${result.raw().body?.string()}") // Critical for seeing actual data
+
+           // if (result.isSuccessful) {
+               // val bodyString = Gson().toJson(result.body())
+                //println("Parsed Body: $bodyString")
+           // }
+            // TESTAR
+
+            return when {
+                result.isSuccessful -> result.body()?.trip.orEmpty()
+                else -> emptyList()
             }
 
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Log.d("TravelRepository", "error: " + e.message)
             return emptyList()
         }
     }
 }
+

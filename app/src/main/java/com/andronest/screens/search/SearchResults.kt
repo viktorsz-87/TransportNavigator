@@ -28,7 +28,7 @@ fun SearchResults(
             stopLocation.stopLocation?.let { stopLoc ->
                 SearchCard(
                     stopLocation = stopLoc,
-                    onClick = { navController.navigate(Navigation.ArrivalsScreen.createRoute(stopLoc.id)) })
+                    onClick = { navController.navigate(Navigation.ArrivalsScreen.createRoute(stopLoc.extId)) })
             }
         }
     }

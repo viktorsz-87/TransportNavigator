@@ -27,9 +27,9 @@ class SearchViewModel @Inject constructor(
     val searchUiState = _searchUiState.asStateFlow()
 
 
-    fun getUserStopId(lat: String, long: String) {
+    fun getUserStopId() {
         viewModelScope.launch{
-            TransportNavigatorApp.userStopId = repository.getStopId(lat, long)
+            TransportNavigatorApp.userStopId = repository.getUserStopId()
         }
     }
 

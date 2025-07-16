@@ -39,7 +39,7 @@ fun ArrivalsCard(
                 .padding(8.dp)
                 .clickable(
                     enabled = true,
-                    onClick = { navController.navigate(Navigation.TripScreen.createRoute(item.lat, item.lon, item.stopid)) })
+                    onClick = { navController.navigate(Navigation.TripScreen.createRoute(item.lat, item.lon, item.stopExtId)) })
         ) {
 
             ArrivalsCardItem(item = item)

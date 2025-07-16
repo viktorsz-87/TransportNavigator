@@ -81,11 +81,11 @@ fun TripScreen(
                 uiState.errorMessage != null -> ErrorState(uiState.errorMessage)
                 uiState.isSearching -> SearchingState()
                 !uiState.results.isNullOrEmpty() ->
-                    /*TripResults(
+                    TripResults(
                         navController = navController,
                         results = uiState.results
-                    )*/
-                    MapWithMarkers()
+                    )
+                    //MapWithMarkers()
 
                 else -> EmptyState()
             }

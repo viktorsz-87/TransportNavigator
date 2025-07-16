@@ -18,8 +18,8 @@ interface ResRobotAPI {
         @Query("originCoordLat") latitude: String,
         @Query("originCoordLong") longitude: String,
         @Query("format") format: String = "json",
-        @Query("r") r: Int = 2000,                              // maxDistance
-        @Query("maxNo") maxResults: Int = 10,
+        @Query("r") r: Int = 10000,                              // maxDistance
+        @Query("maxNo") maxResults: Int = 20,
         @Query("lang") language: String="en",
         //@Query("products") transportType: Int = 128,          // 128 (bus), 32 (subway)
         @Query("accessId") apiKey: String = RESROBOT_API_KEY
@@ -49,7 +49,10 @@ interface ResRobotAPI {
         @Query("destId") destId: String,
         @Query("lang") language: String = "en",
         @Query("format") format: String = "json",
-        @Query("accessId") apiKey: String = RESROBOT_API_KEY
+        @Query("accessId") apiKey: String = RESROBOT_API_KEY,
+        @Query("passlist") passlist: Int = 1,
+        @Query("detailLevel") detailLevel: String = "stops",  // Must be "stops"
+        @Query("includeStopData") includeStopData: Int = 1,   // Critical addition
     ): Response<TripResponse> // Use Retrofit's Response wrapper
 
 }
