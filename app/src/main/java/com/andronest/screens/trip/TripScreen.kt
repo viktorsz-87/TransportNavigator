@@ -83,7 +83,7 @@ fun TripScreen(
                 !uiState.results.isNullOrEmpty() ->
                     TripResults(
                         navController = navController,
-                        results = uiState.results
+                        trips = uiState.results
                     )
                     //MapWithMarkers()
 
