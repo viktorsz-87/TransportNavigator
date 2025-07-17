@@ -17,9 +17,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -33,9 +33,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.andronest.R
 import com.andronest.model.TripResponse
 import com.andronest.model.TripResponse.Trip.LegList.Leg
 import com.andronest.model.TripResponse.Trip.LegList.Leg.Stops.Stop
@@ -66,7 +68,7 @@ fun TripCard(
             TripCardSummary(
                 originName = trip.origin.name,
                 destinationName = trip.destination.name,
-                duration = trip.duration,
+                duration = formatDuration(trip.duration),
                 departure = trip.origin.time,
                 arrival = trip.destination.time
             )
@@ -110,8 +112,39 @@ fun TripDetails(
             )
         }
     }
-
 }
+
+fun formatDuration(duration: String): String {
+    if (duration == "PT") return "0 mins"  // Handle empty duration
+
+    var rest = duration.substring(2)  // Remove "PT"
+    var minutes = 0
+    var hours = 0
+
+    // Extract hours
+    if (rest.contains("H")) {
+        val parts = rest.split("H", limit = 2)
+        hours = parts[0].toIntOrNull() ?: 0
+        rest = parts.getOrNull(1) ?: ""
+    }
+
+    // Extract minutes
+    if (rest.contains("M")) {
+        val parts = rest.split("M", limit = 2)
+        minutes = parts[0].toIntOrNull() ?: 0
+    }
+
+    // Convert to total minutes if hours exist
+    val totalMinutes = hours * 60 + minutes
+
+    return when {
+        hours > 0 && minutes > 0 -> "$hours h ${minutes} mins"
+        hours > 0 -> "$hours h"
+        else -> "$totalMinutes mins"
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LegDetails(
     leg: Leg,
@@ -119,13 +152,14 @@ private fun LegDetails(
     modifier: Modifier = Modifier,
     onStopClick: (Stop) -> Unit
 ) {
-    val transportIcon = when (leg.type.uppercase()) {
-        "BUS" -> Icons.Default.Warning
-        "METRO", "SUBWAY" -> Icons.Default.Warning
-        "TRAIN" -> Icons.Default.Warning
-        "TRAM" -> Icons.Default.Warning
-        "WALK" -> Icons.Default.Warning
-        else -> Icons.Default.Warning
+    val transportIcon = when (leg.category?.uppercase()) {
+        "BUS", "BLT","BBL","BRB","BRE"                                      -> painterResource(R.drawable.bus_24)
+        "METRO", "SUBWAY", "ULT"                                            -> painterResource(R.drawable.subway_24)
+        "TRAIN","JBL","JLT","JRE","JEN","JNT","JST","JEX","REG","JAX"       -> painterResource(R.drawable.train_24)
+        "TRAM","SLT"                                                        -> painterResource(R.drawable.tram_24)
+        "WALK"                                                              -> painterResource(R.drawable.walk_24)
+        "JNY"                                                               -> painterResource(R.drawable.location_on_24)
+        else                                                                -> {painterResource(R.drawable.walk_24)}
     }
 
     Card(
@@ -143,7 +177,7 @@ private fun LegDetails(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Icon(
-                    imageVector = transportIcon,
+                    painter = transportIcon,
                     contentDescription = leg.type,
                     modifier = Modifier.size(20.dp)
                 )
@@ -160,7 +194,7 @@ private fun LegDetails(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = leg.duration,
+                    text = formatDuration(leg.duration),
                     style = MaterialTheme.typography.labelMedium
                 )
             }
