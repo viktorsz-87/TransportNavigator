@@ -8,13 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.andronest.model.TripResponse
-import com.andronest.model.TripResponse.Trip.LegList.Leg.Stops.Stop
 
 
 @Composable
 fun TripDetails(
     trip: TripResponse.Trip,
-    onStopClick: (Stop) -> Unit,
     modifier: Modifier = Modifier) {
 
     Column(
@@ -26,10 +24,9 @@ fun TripDetails(
 
         // Show each leg of the journey
         trip.legList.leg.forEachIndexed { index, leg ->
-            LegDetails(
+            TripLegDetails(
                 leg = leg,
-                legNumber = index + 1,
-                onStopClick = onStopClick
+                legNumber = index + 1
             )
         }
     }

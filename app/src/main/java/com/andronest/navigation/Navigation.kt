@@ -1,5 +1,9 @@
 package com.andronest.navigation
 
+import android.net.Uri
+import com.andronest.model.TripResponse
+import com.google.gson.Gson
+
 sealed class Navigation(val route: String) {
 
     object SearchScreen: Navigation("Search")
@@ -8,6 +12,12 @@ sealed class Navigation(val route: String) {
             return "Arrivals?id=$id"
         }
     }
+    object MapScreen: Navigation("Map?trip={trip}"){
+        fun createRoute(trip: TripResponse.Trip): String {
+           return "Map?trip=${Uri.encode(Gson().toJson(trip))}"
+        }
+    }
+
     object TripScreen: Navigation("Trip?latitude={latitude}&longitude={longitude}&stopId={stopId}"){
 
         fun createRoute(latitude: Double, longitude:Double, stopId: String): String {

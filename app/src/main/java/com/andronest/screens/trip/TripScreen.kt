@@ -30,13 +30,15 @@ import com.andronest.viewmodels.TripViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TripScreen(
+    onSearch: () -> Unit,
+    onArrivals: () -> Unit,
+    onFavorites: () -> Unit,
     stopId: String,
     currentDest: String?,
     navController: NavController,
     viewModel: TripViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
-
     val snackbarHostState = remember { SnackbarHostState() }
     val uiState by viewModel.tripUiState.collectAsStateWithLifecycle()
 
@@ -66,7 +68,12 @@ fun TripScreen(
             )
         },
         bottomBar = {
-            BottomNavigationBar(currentDest, onClick = {})
+            BottomNavigationBar(
+                currentDest,
+                onSearch = onSearch,
+                onArrivals = onArrivals,
+                onFavorites = onFavorites
+            )
         }
 
     ) { paddingValues ->
@@ -85,8 +92,6 @@ fun TripScreen(
                         navController = navController,
                         trips = uiState.results
                     )
-                    //MapWithMarkers()
-
                 else -> EmptyState()
             }
         }

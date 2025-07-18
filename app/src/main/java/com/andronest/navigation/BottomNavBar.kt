@@ -22,7 +22,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun BottomNavigationBar(
     currentDest: String?,
-    onClick: () -> Unit,
+    onSearch: ()->Unit = {},
+    onTrip: ()->Unit = {},
+    onFavorites: ()->Unit = {},
+    onArrivals: ()->Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -64,12 +67,21 @@ fun BottomNavigationBar(
                 colors = NavigationBarItemDefaults.colors().copy(
                     selectedIndicatorColor = Color(0xC4409DDA)
                 ),
-                label = { Text(
+                label = {
+                    Text(
                     fontWeight = FontWeight.Bold,
                     text = item.title,
-                    style = MaterialTheme.typography.labelMedium) },
+                    style = MaterialTheme.typography.labelMedium)
+                },
                 selected = currentDest == item.route,
-                onClick = { onClick() },
+                onClick = {
+                    when(item.route){
+                        Navigation.SearchScreen.getBaseRoute() -> onSearch()
+                        Navigation.FavoritesScreen.getBaseRoute() -> onFavorites()
+                        Navigation.ArrivalsScreen.getBaseRoute() -> onArrivals()
+                        Navigation.TripScreen.getBaseRoute() -> onTrip()
+                    }
+                },
                 icon = {
                     Icon(
                         modifier = modifier.size(40.dp),

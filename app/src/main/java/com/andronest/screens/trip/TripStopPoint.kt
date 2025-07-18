@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun StopPoint(
+fun TripStopPoint(
     name: String,
     time: String,
     isFirst: Boolean = false,

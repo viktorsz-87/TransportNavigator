@@ -68,7 +68,7 @@ data class TripResponse(
         val tripId: String = "",
         @SerializedName("TripStatus")
         val tripStatus: TripStatus = TripStatus()
-    ) {
+    )  {
         data class Destination(
             @SerializedName("date")
             val date: String = "",

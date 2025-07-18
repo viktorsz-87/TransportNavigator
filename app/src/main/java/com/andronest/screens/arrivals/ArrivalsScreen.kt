@@ -28,6 +28,9 @@ import com.andronest.viewmodels.ArrivalsViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArrivalsScreen(
+    onSearch: () -> Unit,
+    onTrip: () -> Unit,
+    onFavorites: () -> Unit,
     currentDest: String?,
     id: String,
     navController: NavController,
@@ -60,7 +63,12 @@ fun ArrivalsScreen(
             )
         },
         bottomBar = {
-            BottomNavigationBar(currentDest, onClick = {})
+            BottomNavigationBar(
+                currentDest,
+                onSearch = onSearch,
+                onTrip = onTrip,
+                onFavorites = onFavorites
+            )
         }
 
     ) { paddingValues ->
@@ -76,9 +84,11 @@ fun ArrivalsScreen(
                 uiState.isSearching -> SearchingState()
                 !uiState.results.isNullOrEmpty() ->
                     ArrivalsResult(
-                    viewModel = viewModel,
-                    navController=navController,
-                    results = uiState.results)
+                        viewModel = viewModel,
+                        navController = navController,
+                        results = uiState.results
+                    )
+
                 else -> EmptyState()
             }
         }

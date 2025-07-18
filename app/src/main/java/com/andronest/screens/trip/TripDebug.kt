@@ -8,7 +8,7 @@ import com.andronest.model.TripResponse
 
 
 @Composable
-fun debugTrip(trip: TripResponse.Trip){
+fun TripDebug(trip: TripResponse.Trip){
 
     // Print trip summary first
     Text(text = "\nTRIP SUMMARY\n" +
@@ -32,7 +32,7 @@ fun debugTrip(trip: TripResponse.Trip){
 
             // Origin and destination of this leg
             Text(text = "├─ From: ${leg.origin.name} (${leg.origin.extId})")
-            Text(text = "├─ To: ${leg.destination?.name ?: "Unknown"} (${leg.destination.extId})")
+            Text(text = "├─ To: ${leg.destination.name} (${leg.destination.extId})")
             Text(text = "├─ Duration: ${leg.duration}")
 
             // Transport details if available

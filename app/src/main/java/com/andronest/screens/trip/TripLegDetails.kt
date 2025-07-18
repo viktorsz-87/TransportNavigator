@@ -23,16 +23,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.andronest.R
 import com.andronest.model.TripResponse.Trip.LegList.Leg
-import com.andronest.model.TripResponse.Trip.LegList.Leg.Stops.Stop
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LegDetails(
+fun TripLegDetails(
     leg: Leg,
     legNumber: Int,
-    modifier: Modifier = Modifier,
-    onStopClick: (Stop) -> Unit
+    modifier: Modifier = Modifier
 ) {
     val transportIcon = when (leg.category?.uppercase()) {
         "BUS", "BLT","BBL","BRB","BRE"                                  -> painterResource(R.drawable.bus_24)
@@ -89,7 +87,7 @@ fun LegDetails(
             Spacer(modifier = Modifier.height(8.dp))
 
             // Origin and destination
-            StopPoint(
+            TripStopPoint(
                 name = leg.origin.name,
                 time = leg.origin.time,
                 isFirst = true
@@ -97,14 +95,13 @@ fun LegDetails(
 
             // Intermediate stops
             leg.stops?.stop?.forEach { stop ->
-                StopPoint(
+                TripStopPoint(
                     name = stop.name,
                     time = stop.arrTime ?: stop.depTime ?: "",
-                    onClick = { onStopClick(stop) }
                 )
             }
 
-            StopPoint(
+            TripStopPoint(
                 name = leg.destination.name,
                 time = leg.destination.time,
                 isLast = true

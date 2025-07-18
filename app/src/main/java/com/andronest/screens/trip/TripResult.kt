@@ -1,6 +1,5 @@
 package com.andronest.screens.trip
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,10 +22,10 @@ fun TripResult(
 
         items(trips.size) {index->
 
-            TripCard(trip= trips[index],
-                onStopClick = {
-                    Log.d("TripCard","OnCLick: " + trips[index].destination.name)
-            })
+            TripCard(
+                navController = navController,
+                trip= trips[index],
+            )
             //debugTrip(results[index])
         }
     }

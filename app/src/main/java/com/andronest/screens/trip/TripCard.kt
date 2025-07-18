@@ -20,14 +20,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.andronest.model.TripResponse
-import com.andronest.model.TripResponse.Trip.LegList.Leg.Stops.Stop
 
 
 @Composable
 fun TripCard(
+    navController: NavController,
     trip: TripResponse.Trip,
-    onStopClick:(Stop) -> Unit = {},
     modifier: Modifier = Modifier) {
 
     var expanded by remember { mutableStateOf(false) }
@@ -49,11 +49,13 @@ fun TripCard(
             .animateContentSize()) {
 
             TripCardSummary(
-                originName = trip.origin.name,
+                trip = trip,
+                navController = navController,
+                originName      = trip.origin.name,
                 destinationName = trip.destination.name,
-                duration = formatTimeDuration(trip.duration),
-                departure = trip.origin.time,
-                arrival = trip.destination.time
+                duration        = formatTimeDuration(trip.duration),
+                departure       = trip.origin.time,
+                arrival         = trip.destination.time
             )
 
             // Expand / collapse button
@@ -66,7 +68,7 @@ fun TripCard(
             }
 
             if(expanded){
-                TripDetails(trip=trip, onStopClick= onStopClick)
+                TripDetails(trip=trip)
             }
         }
     }

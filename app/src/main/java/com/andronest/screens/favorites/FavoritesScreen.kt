@@ -1,4 +1,4 @@
-package com.andronest.screens.search
+package com.andronest.screens.favorites
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,16 +20,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.andronest.navigation.BottomNavigationBar
-import com.andronest.screens.shared.ErrorState
-import com.andronest.screens.shared.SearchingState
 import com.andronest.viewmodels.SearchViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(
-    onArrivals: ()->Unit,
-    onTrip: ()->Unit,
-    onFavorites: ()->Unit,
+fun FavoritesScreen(
+    onArrivals: () -> Unit,
+    onTrip: () -> Unit,
+    onSearch: () -> Unit,
     currentDest: String?,
     navController: NavController,
     viewModel: SearchViewModel = hiltViewModel(),
@@ -53,7 +51,7 @@ fun SearchScreen(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary
                 ),
-                title = {Text("Nearby stops")}
+                title = { Text("Favorites") }
             )
         },
         bottomBar = {
@@ -61,12 +59,11 @@ fun SearchScreen(
                 currentDest,
                 onTrip = onTrip,
                 onArrivals = onArrivals,
-                onFavorites = onFavorites)
+                onSearch = onSearch
+            )
         }
 
     ) { paddingValues ->
-
-        GetLocation(viewModel = viewModel)
 
         Column(
             modifier = Modifier
@@ -74,12 +71,7 @@ fun SearchScreen(
                 .padding(paddingValues)
         ) {
 
-            when {
-                uiState.isSearching -> SearchingState()
-                uiState.errorMessage!=null -> ErrorState(errorMessage = uiState.errorMessage)
-                !uiState.results.isNullOrEmpty() -> SearchResults(navController, uiState.results)
-                else -> EmptyState()
-            }
+
         }
     }
 }
