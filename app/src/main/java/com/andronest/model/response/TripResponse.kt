@@ -1,4 +1,4 @@
-package com.andronest.model
+package com.andronest.model.response
 
 import com.google.gson.annotations.SerializedName
 

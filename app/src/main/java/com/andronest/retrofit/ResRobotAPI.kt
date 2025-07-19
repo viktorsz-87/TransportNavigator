@@ -2,9 +2,9 @@ package com.andronest.retrofit
 
 
 import com.andronest.constants.Constants.API_KEYS.RESROBOT_API_KEY
-import com.andronest.model.ArrivalsResponse
-import com.andronest.model.NearbyStopsResponse
-import com.andronest.model.TripResponse
+import com.andronest.model.response.ArrivalsResponse
+import com.andronest.model.response.NearbyStopsResponse
+import com.andronest.model.response.TripResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

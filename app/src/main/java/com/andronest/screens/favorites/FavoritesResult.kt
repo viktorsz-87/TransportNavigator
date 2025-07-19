@@ -1,4 +1,4 @@
-package com.andronest.screens.arrivals
+package com.andronest.screens.favorites
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -8,14 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.andronest.model.response.ArrivalsResponse
-import com.andronest.viewmodels.ArrivalsViewModel
+import com.andronest.room.FavoriteStopEntity
 
 @Composable
-fun ArrivalsResult(
+fun FavoritesResult(
     navController: NavController,
-    results: List<ArrivalsResponse.Arrival>,
-    viewModel: ArrivalsViewModel,
+    results: List<FavoriteStopEntity>,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -26,12 +24,7 @@ fun ArrivalsResult(
 
         items(items = results) { item ->
 
-            ArrivalsCard(
-                viewModel = viewModel,
-                item = item,
-                navController = navController
-            )
-
+            FavoritesCard(item=item, navController = navController)
         }
     }
 }

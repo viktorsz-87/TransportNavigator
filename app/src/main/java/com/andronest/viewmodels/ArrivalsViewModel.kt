@@ -2,7 +2,7 @@ package com.andronest.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.andronest.model.ArrivalsScreenState
+import com.andronest.model.state.ArrivalsScreenState
 import com.andronest.repository.TravelRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel

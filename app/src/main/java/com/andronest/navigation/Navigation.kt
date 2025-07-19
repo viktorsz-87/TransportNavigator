@@ -1,7 +1,7 @@
 package com.andronest.navigation
 
 import android.net.Uri
-import com.andronest.model.TripResponse
+import com.andronest.model.response.TripResponse
 import com.google.gson.Gson
 
 sealed class Navigation(val route: String) {

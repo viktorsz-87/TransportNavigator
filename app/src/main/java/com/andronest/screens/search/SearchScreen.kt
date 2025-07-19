@@ -22,6 +22,7 @@ import androidx.navigation.NavController
 import com.andronest.navigation.BottomNavigationBar
 import com.andronest.screens.shared.ErrorState
 import com.andronest.screens.shared.SearchingState
+import com.andronest.viewmodels.FavoritesViewModel
 import com.andronest.viewmodels.SearchViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,6 +34,7 @@ fun SearchScreen(
     currentDest: String?,
     navController: NavController,
     viewModel: SearchViewModel = hiltViewModel(),
+    viewModelFav: FavoritesViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.searchUiState.collectAsStateWithLifecycle()
@@ -77,7 +79,13 @@ fun SearchScreen(
             when {
                 uiState.isSearching -> SearchingState()
                 uiState.errorMessage!=null -> ErrorState(errorMessage = uiState.errorMessage)
-                !uiState.results.isNullOrEmpty() -> SearchResults(navController, uiState.results)
+                !uiState.results.isNullOrEmpty() ->
+
+                    SearchResults(
+                        viewModel = viewModelFav,
+                        navController,
+                        uiState.results)
+
                 else -> EmptyState()
             }
         }

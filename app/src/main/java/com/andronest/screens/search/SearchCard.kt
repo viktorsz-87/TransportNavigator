@@ -12,11 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.andronest.model.NearbyStopsResponse
+import com.andronest.model.response.NearbyStopsResponse
+import com.andronest.viewmodels.FavoritesViewModel
 
 
 @Composable
 fun SearchCard(
+    viewModel: FavoritesViewModel,
     onClick: () ->Unit,
     stopLocation: NearbyStopsResponse.StopLocationOrCoordLocation.StopLocation,
     modifier: Modifier = Modifier) {
@@ -30,10 +32,13 @@ fun SearchCard(
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             ),
             shape = RectangleShape,
-            modifier = modifier.fillMaxSize().padding(8.dp)
+            modifier = modifier
+                .fillMaxSize()
+                .padding(8.dp)
         ) {
 
-            SearhCardItem(
+            SearchCardItem(
+                viewModel = viewModel,
                 modifier = Modifier
                     .clickable(enabled = true, onClick = {onClick()}),
                 stopLocation = stopLocation)

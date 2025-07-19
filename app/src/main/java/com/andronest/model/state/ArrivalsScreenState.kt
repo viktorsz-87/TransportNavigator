@@ -1,4 +1,6 @@
-package com.andronest.model
+package com.andronest.model.state
+
+import com.andronest.model.response.ArrivalsResponse
 
 data class ArrivalsScreenState(
     val isSearching: Boolean=false,

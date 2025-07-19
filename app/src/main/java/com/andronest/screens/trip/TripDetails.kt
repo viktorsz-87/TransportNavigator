@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.andronest.model.TripResponse
+import com.andronest.model.response.TripResponse
 
 
 @Composable

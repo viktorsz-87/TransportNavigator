@@ -20,7 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.andronest.R
-import com.andronest.model.TripResponse
+import com.andronest.model.response.TripResponse
 import com.andronest.navigation.Navigation
 
 

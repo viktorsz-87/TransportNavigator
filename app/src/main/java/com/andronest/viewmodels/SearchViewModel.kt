@@ -3,7 +3,7 @@ package com.andronest.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.andronest.di.TransportNavigatorApp
-import com.andronest.model.SearchScreenState
+import com.andronest.model.state.SearchScreenState
 import com.andronest.repository.TravelRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel

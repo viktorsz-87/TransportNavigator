@@ -19,7 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
-import com.andronest.model.TripResponse
+import com.andronest.model.response.TripResponse
 import com.andronest.navigation.BottomNavigationBar
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng

@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.andronest.model.ArrivalsResponse
+import com.andronest.model.response.ArrivalsResponse
 import com.andronest.navigation.Navigation
 import com.andronest.viewmodels.ArrivalsViewModel
 

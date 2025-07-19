@@ -22,7 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.andronest.R
-import com.andronest.model.TripResponse.Trip.LegList.Leg
+import com.andronest.model.response.TripResponse.Trip.LegList.Leg
 
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -1,4 +1,4 @@
-package com.andronest.model
+package com.andronest.model.response
 
 import com.andronest.constants.Constants
 import com.google.gson.annotations.SerializedName

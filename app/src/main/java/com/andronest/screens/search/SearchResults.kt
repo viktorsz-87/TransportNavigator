@@ -8,11 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.andronest.model.NearbyStopsResponse
+import com.andronest.model.response.NearbyStopsResponse
 import com.andronest.navigation.Navigation
+import com.andronest.viewmodels.FavoritesViewModel
 
 @Composable
 fun SearchResults(
+    viewModel: FavoritesViewModel,
     navController: NavController,
     results: List<NearbyStopsResponse.StopLocationOrCoordLocation>,
     modifier: Modifier = Modifier
@@ -27,8 +29,10 @@ fun SearchResults(
 
             stopLocation.stopLocation?.let { stopLoc ->
                 SearchCard(
+                    viewModel = viewModel,
                     stopLocation = stopLoc,
-                    onClick = { navController.navigate(Navigation.ArrivalsScreen.createRoute(stopLoc.extId)) })
+                    onClick = { navController.navigate(Navigation.ArrivalsScreen.createRoute(stopLoc.extId)) }
+                )
             }
         }
     }

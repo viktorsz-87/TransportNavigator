@@ -14,7 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.andronest.model.TripResponse
+import com.andronest.model.response.TripResponse
 import com.andronest.navigation.Navigation
 import com.andronest.screens.arrivals.ArrivalsScreen
 import com.andronest.screens.favorites.FavoritesScreen
