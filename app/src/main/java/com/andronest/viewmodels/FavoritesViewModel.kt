@@ -9,6 +9,7 @@ import com.andronest.room.FavoriteStopEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,6 +29,18 @@ class FavoritesViewModel @Inject constructor(
     fun isFavorite(stopId: String): Boolean {
         return _favoritesUiState.value.results.any {
             it.id == stopId
+        }
+    }
+
+    fun deleteFavorite(id: String){
+        viewModelScope.launch {
+            repository.deleteFavorite(id)
+
+            // Filter from the results directly rather than query the entire database
+            // It will still recompose as we are collecting as state
+            _favoritesUiState.value = _favoritesUiState.value.copy(
+                results = _favoritesUiState.value.results.filter { it.id != id }
+            )
         }
     }
 
@@ -61,23 +74,28 @@ class FavoritesViewModel @Inject constructor(
         viewModelScope.launch {
 
             try {
-                _favoritesUiState.value.copy(
-                    isSearching = true,
-                    errorMessage = null)
+                _favoritesUiState.update {
+                    it.copy(
+                        isSearching = true,
+                        errorMessage = null)
+                }
 
                 val results = repository.getAllFavorites()
 
-                _favoritesUiState.value.copy(
-                    isSearching = false,
-                    results = results,
-                    errorMessage = if(results.isNullOrEmpty()) "No favorites saved" else "")
+                _favoritesUiState.update {
+                    it.copy(
+                        isSearching = false,
+                        results = results,
+                        errorMessage = if(results.isNullOrEmpty()) "No favorites saved" else null)
+                }
 
             } catch (e: Exception) {
-
-                _favoritesUiState.value.copy(
-                    isSearching = false,
-                    results = emptyList(),
-                    errorMessage = e.message)
+                _favoritesUiState.update {
+                    it.copy(
+                        isSearching = false,
+                        results = emptyList(),
+                        errorMessage = e.message)
+                }
             }
         }
     }

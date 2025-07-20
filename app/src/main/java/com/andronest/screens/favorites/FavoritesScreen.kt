@@ -68,7 +68,8 @@ fun FavoritesScreen(
                 !uiState.results.isNullOrEmpty() ->
                     FavoritesResult(
                         navController = navController,
-                        results = uiState.results
+                        results = uiState.results,
+                        viewModel = viewModel
                     )
                 else -> EmptyState()
             }

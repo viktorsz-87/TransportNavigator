@@ -2,6 +2,7 @@ package com.andronest.navigation
 
 import android.net.Uri
 import com.andronest.model.response.TripResponse
+import com.andronest.room.FavoriteStopEntity
 import com.google.gson.Gson
 
 sealed class Navigation(val route: String) {
@@ -15,6 +16,12 @@ sealed class Navigation(val route: String) {
     object MapScreen: Navigation("Map?trip={trip}"){
         fun createRoute(trip: TripResponse.Trip): String {
            return "Map?trip=${Uri.encode(Gson().toJson(trip))}"
+        }
+    }
+
+    object MapFavoriteScreen: Navigation("MapFavorite?stopEntity={stopEntity}"){
+        fun createRoute(stopEntity: FavoriteStopEntity): String {
+            return "MapFavorite?stopEntity=${Uri.encode(Gson().toJson(stopEntity))}"
         }
     }
 

@@ -16,8 +16,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.andronest.model.response.TripResponse
 import com.andronest.navigation.Navigation
+import com.andronest.room.FavoriteStopEntity
 import com.andronest.screens.arrivals.ArrivalsScreen
 import com.andronest.screens.favorites.FavoritesScreen
+import com.andronest.screens.map.MapFavoriteScreen
 import com.andronest.screens.map.MapScreen
 import com.andronest.screens.search.SearchScreen
 import com.andronest.screens.trip.TripScreen
@@ -43,6 +45,23 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     startDestination = Navigation.SearchScreen.route
                 ) {
+
+                    composable(
+                        arguments = listOf(
+                            navArgument("stopEntity"){
+                                type = NavType.StringType
+                                nullable = true
+                            }
+                        ),
+                        route = Navigation.MapFavoriteScreen.route){
+
+                        val json = it.arguments?.getString("stopEntity")
+                        val stopEntity = Gson().fromJson(Uri.decode(json), FavoriteStopEntity::class.java)
+
+                        MapFavoriteScreen(
+                            item = stopEntity,
+                            navController = navController)
+                    }
 
                     composable(
                         arguments = listOf(
